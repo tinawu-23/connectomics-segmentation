@@ -8,6 +8,7 @@ def helpfunc():
     print('python segment.py all\t\tProcess and save all images to results folder')
     print('python segment.py {imageID}\tProcess and display a specified imageID\n\n')
 
+
 def process(imagefile, mode):
     # read image
     filename = 'images/' + imagefile + '.png'
@@ -29,7 +30,13 @@ def process(imagefile, mode):
     close = cv.morphologyEx(thresh, cv.MORPH_CLOSE, kernel)
 
     # smooths the image with median blur
-    final = cv.medianBlur(close, 3)
+    blur = cv.medianBlur(close, 3)
+
+    # fills holes inside the images (as edges are always darker)
+    final = cv.bitwise_not(blur)
+    contours, hierarchy = cv.findContours(final, cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE)
+    for cnt in contours:
+        cv.drawContours(final, [cnt], 0, 255, -1)
 
     # display/save the final result with the original image
     result = np.concatenate((gray, final), axis=1)
