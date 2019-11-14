@@ -14,6 +14,7 @@ Aftering examining the image and ground-truths dataset, I formulated the problem
     - `python segment.py all` process and **save** all images to `results/` folder  
     - `python segment.py {imageID}`  process and **display** a specified imageID    
 </br>
+
 ## Evaluation
 The evaulation method is qualitative matching to the ground-truth images; a few processed images are attached below.       
     
